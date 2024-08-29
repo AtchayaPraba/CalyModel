@@ -13,7 +13,8 @@ data:
   val_chip_dir: /content/drive/MyDrive/sample_dataset/test_cubes
   val_label_dir: /content/drive/MyDrive/sample_dataset/test_labels
 model:
-  ckpt_path: checkpoints/clay-v1-base.ckpt
+  # ckpt_path: checkpoints/clay-v1-base.ckpt
+  ckpt_path: /content/CalyModel/Clay/clay-v1-base.ckpt
   lr: 1e-3
   wd: 0.05
   b1: 0.9

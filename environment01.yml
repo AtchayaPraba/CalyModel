@@ -37,7 +37,6 @@ dependencies:
   - typeshed-client~=2.4.0
   - vit-pytorch~=1.6.4
   # - wandb~=0.15.12
-  - wandb~=0.17.7
   - zarr~=2.16.1
 platforms:
   - linux-64

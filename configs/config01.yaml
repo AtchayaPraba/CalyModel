@@ -41,11 +41,18 @@ trainer:
   use_distributed_sampler: False
   logger:
     # - class_path: lightning.pytorch.loggers.Wandblogger 
+      # init_args:
+      #   entity: developmentseed
+      #   project: clay
+      #   log_model: false
     - class_path: lightning.pytorch.loggers.TensorBoardLogger 
       init_args:
-        entity: developmentseed
-        project: clay
-        log_model: false
+        save_dir: /content/drive/MyDrive/sample_dataset/logs
+        name: default
+        version: None
+        log_graph: False
+        default_hp_metric: True
+        prefix: ""
   callbacks:
     - class_path: lightning.pytorch.callbacks.ModelCheckpoint
       init_args:

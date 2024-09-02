@@ -40,7 +40,8 @@ trainer:
   # limit_val_batches: 0.25
   accumulate_grad_batches: 4
   logger:
-    - class_path: lightning.pytorch.loggers.WandbLogger
+    # - class_path: lightning.pytorch.loggers.WandbLogger
+    - class_path: lightning.pytorch.loggers.TensorBoardLogger
       init_args:
         entity: developmentseed
         project: clay-regression

@@ -8,10 +8,10 @@ data:
   # train_label_dir: data/biomasters/train_agbm
   # val_chip_dir: data/biomasters/test_cube
   # val_label_dir: data/biomasters/test_agbm
-  train_chip_dir: content/drive/MyDrive/biomasters/train_cubes
-  train_label_dir: /content/drive/MyDrive/biomasters/train_labels
-  val_chip_dir: /content/drive/MyDrive/biomasters/test_cubes
-  val_label_dir: /content/drive/MyDrive/biomasters/test_labels
+  train_chip_dir: "content/drive/MyDrive/biomasters/train_cubes"
+  train_label_dir: "/content/drive/MyDrive/biomasters/train_labels"
+  val_chip_dir: "/content/drive/MyDrive/biomasters/test_cubes"
+  val_label_dir: "/content/drive/MyDrive/biomasters/test_labels"
 model:
   # ckpt_path: checkpoints/clay-v1-base.ckpt
   ckpt_path: /content/CalyModel/Clay/clay-v1-base.ckpt

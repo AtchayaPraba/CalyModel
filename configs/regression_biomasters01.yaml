@@ -30,9 +30,12 @@ trainer:
   strategy: ddp
   devices: auto
   num_nodes: 1
-  precision: bf16-mixed
-  log_every_n_steps: 5
-  max_epochs: 100
+  # precision: bf16-mixed
+  precision: 16-mixed
+  # log_every_n_steps: 5
+  log_every_n_steps: 1
+  # max_epochs: 100
+  max_epochs: 10
   default_root_dir: checkpoints/regression
   fast_dev_run: False
   num_sanity_val_steps: 0
@@ -40,16 +43,16 @@ trainer:
   # limit_val_batches: 0.25
   accumulate_grad_batches: 4
   logger:
-     # - class_path: lightning.pytorch.loggers.WandbLogger
+    # - class_path: lightning.pytorch.loggers.WandbLogger
       # init_args:
       #   entity: developmentseed
       #   project: clay-regression
       #   log_model: false
     - class_path: lightning.pytorch.loggers.TensorBoardLogger
       init_args:
-        save_dir: /content/drive/MyDrive/sample_dataset/logs
-        name: default
-        version: None
+        save_dir: /content/drive/MyDrive/tb_logs
+        name: test_run
+        version: v0.0
         log_graph: False
         default_hp_metric: True
         prefix: ""

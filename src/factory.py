@@ -1,7 +1,6 @@
 """Dynamic Embedding from DOFA paper.
 Reference:
-- https://arxiv.org/a
-bs/2403.15356
+- https://arxiv.org/abs/2403.15356
 - https://github.com/zhu-xlab/DOFA
 """
 
@@ -14,22 +13,18 @@ from src.utils import posemb_sincos_1d
 
 
 class FCBlock(nn.Module):
-    print("\n Entered FCBlock...! in factory.py")
     def __init__(self, size):
         super().__init__()
         self.l1 = nn.Linear(size, size)
         self.l2 = nn.Linear(size, size)
-        breakpoint()
 
     def forward(self, x):
         y = F.gelu(self.l1(x))
         y = F.gelu(self.l2(y))
-        breakpoint()
         return x + y
 
 
 class WavesTransformer(nn.Module):
-    print("\n Entered WavesTransformer...! in factory.py")
     def __init__(  # noqa: PLR0913
         self,
         wave_dim,
@@ -60,7 +55,6 @@ class WavesTransformer(nn.Module):
             torch.randn(self.num_latent_tokens, wave_dim) * 0.02
         )
         self.bias_token = nn.Parameter(torch.randn(1, wave_dim) * 0.02)
-        breakpoint()
 
     def forward(self, x):
         x = torch.cat([self.weight_tokens, x, self.bias_token], dim=0)
@@ -68,12 +62,11 @@ class WavesTransformer(nn.Module):
         weights = self.fc_weight(
             out[self.num_latent_tokens : -1] + x[self.num_latent_tokens : -1]
         )
-        breakpoint()
+        bias = None if self.is_decoder else self.fc_bias(out[-1])
         return weights, bias
 
 
 class DynamicEmbedding(nn.Module):
-    print("\n Entered DynamicEmbedding...! in factory.py")
     def __init__(
         self,
         wave_dim,
@@ -100,7 +93,6 @@ class DynamicEmbedding(nn.Module):
         self.fclayer = FCBlock(self.wave_dim)
 
         self.initialize_weights()
-        breakpoint()
 
     def forward(self, batch, waves):
         waves = posemb_sincos_1d(waves, self.wave_dim)
@@ -134,7 +126,6 @@ class DynamicEmbedding(nn.Module):
             )
             x = rearrange(dynamic_out, "b c h w -> b (h w) c")
 
-        breakpoint()
         return x, waves
 
     def initialize_weights(self):

@@ -7,7 +7,6 @@ import torch
 
 
 def posemb_sincos_2d(h, w, dim, temperature: int = 10000, dtype=torch.float32):
-    print("\n Entered posemb_sincos_2d...! in utils.py")
     y, x = torch.meshgrid(torch.arange(h), torch.arange(w), indexing="ij")
     assert (dim % 4) == 0, "feature dimension must be multiple of 4 for sincos emb"
     omega = torch.arange(dim // 4) / (dim // 4 - 1)
@@ -16,12 +15,12 @@ def posemb_sincos_2d(h, w, dim, temperature: int = 10000, dtype=torch.float32):
     y = y.flatten()[:, None] * omega[None, :]
     x = x.flatten()[:, None] * omega[None, :]
     pe = torch.cat((x.sin(), x.cos(), y.sin(), y.cos()), dim=1)
-    breakpoint()
     return pe.type(dtype)
 
 
-def posemb_sincos_2d_with_gsd(h, w, dim, gsd=1.0, temperature: int = 10000, dtype=torch.float32):
-    print("\n Entered posemb_sincos_2d_with_gsd...! in utils.py")
+def posemb_sincos_2d_with_gsd(
+    h, w, dim, gsd=1.0, temperature: int = 10000, dtype=torch.float32
+):
     y, x = torch.meshgrid(torch.arange(h), torch.arange(w), indexing="ij")
     assert (dim % 4) == 0, "feature dimension must be multiple of 4 for sincos emb"
 
@@ -31,12 +30,10 @@ def posemb_sincos_2d_with_gsd(h, w, dim, gsd=1.0, temperature: int = 10000, dtyp
     y = y.flatten()[:, None] * omega[None, :]
     x = x.flatten()[:, None] * omega[None, :]
     pe = torch.cat((x.sin(), x.cos(), y.sin(), y.cos()), dim=1)
-    breakpoint()
     return pe.type(dtype)
 
 
 def posemb_sincos_1d(pos, dim, temperature: int = 10000, dtype=torch.float32):
-    print("\n Entered posemb_sincos_1d...! in utils.py")
     assert (
         dim % 2 == 0
     ), "Feature dimension must be a multiple of 2 for sincos embedding"
@@ -47,5 +44,5 @@ def posemb_sincos_1d(pos, dim, temperature: int = 10000, dtype=torch.float32):
 
     scaled_pos = pos[:, None] * omega[None, :]
     pe = torch.cat((scaled_pos.sin(), scaled_pos.cos()), dim=1)
-    breakpoint()
+
     return pe.type(dtype)

@@ -21,6 +21,7 @@ os.environ["TORCH_CUDNN_V8_API_DISABLED"] = "1"
 
 
 class Encoder(nn.Module):
+    print("\n Entered Encoder...! in model.py")
     def __init__(  # noqa: PLR0913
         self,
         mask_ratio,
@@ -54,10 +55,12 @@ class Encoder(nn.Module):
             dim_head=dim_head,
             mlp_dim=int(dim * mlp_ratio),
         )
+        breakpoint()
 
     def to_patch_embed(self, cube, waves):
         """Split the input cube into patches & create embeddings per patch"""
         patches, waves_encoded = self.patch_embedding(cube, waves)  # [B L D]
+        breakpoint()
         return patches, waves_encoded  # ([B L D], [N D])
 
     def add_encodings(self, patches, time, latlon, gsd):
@@ -87,6 +90,7 @@ class Encoder(nn.Module):
         )  # [B L D]
 
         patches = patches + pos_metadata_encoding  # [B L D] + [B L D] -> [B L D]
+        breakpoint()
         return patches  # [B L D]
 
     def mask_out(self, patches):
@@ -153,6 +157,7 @@ class Encoder(nn.Module):
         ]  # [B L:(1 - mask_ratio) D]
         _ = patches[batch_indices, masked_indices, :]  # [B L:mask_ratio D]
 
+        breakpoint()
         return (
             unmasked_patches,
             unmasked_indices,
@@ -170,6 +175,7 @@ class Encoder(nn.Module):
         )  # [B C H W]
 
         B, C, H, W = cube.shape
+        breakpoint()
 
         patches, waves_encoded = self.to_patch_embed(
             cube, waves
@@ -197,12 +203,13 @@ class Encoder(nn.Module):
         unmasked_patches = torch.cat(
             (cls_tokens, unmasked_patches), dim=1
         )  # [B (1 + L) D]
+        breakpoint()
 
         # pass the unmasked patches through the transformer
         encoded_unmasked_patches = self.transformer(
             unmasked_patches
         )  # [B ((1 + L)):(1 - mask_ratio)) D]
-
+        breakpoint()
         return (
             encoded_unmasked_patches,
             unmasked_indices,
@@ -212,6 +219,7 @@ class Encoder(nn.Module):
 
 
 class Decoder(nn.Module):
+    print("\n Entered Decoder...! in model.py")
     def __init__(  # noqa: PLR0913
         self,
         mask_ratio,
@@ -356,6 +364,7 @@ class Decoder(nn.Module):
 
 
 class ClayMAE(nn.Module):
+    print("\n Entered ClayMAE...! in model.py")
     def __init__(  # noqa: PLR0913
         self,
         mask_ratio,
@@ -517,6 +526,7 @@ class ClayMAE(nn.Module):
 
 
 def clay_mae_tiny(**kwargs):
+    print("\n Entered clay_mae_tiny...! in model.py")
     args = {
         # ENCODER
         "dim": 192,
@@ -536,6 +546,7 @@ def clay_mae_tiny(**kwargs):
 
 
 def clay_mae_small(**kwargs):
+    print("\n Entered clay_mae_small...! in model.py")
     args = {
         # ENCODER
         "dim": 384,
@@ -555,6 +566,7 @@ def clay_mae_small(**kwargs):
 
 
 def clay_mae_base(**kwargs):
+    print("\n Entered clay_mae_base...! in model.py")
     args = {
         # ENCODER
         "dim": 768,
@@ -574,6 +586,7 @@ def clay_mae_base(**kwargs):
 
 
 def clay_mae_large(**kwargs):
+    print("\n Entered clay_mae_large...! in model.py")
     args = {
         # ENCODER
         "dim": 1024,
@@ -593,6 +606,7 @@ def clay_mae_large(**kwargs):
 
 
 class ClayMAEModule(L.LightningModule):
+    print("\n Entered ClayMAEModule...! in model.py")
     def __init__(  # noqa: PLR0913
         self,
         model_size="base",

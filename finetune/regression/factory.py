@@ -28,6 +28,7 @@ class SegmentEncoder(Encoder):
         ckpt_path (str): Path to the clay checkpoint file.
     """
 
+    print("\n Entered SegmentEncoder...! in factory.py")
     def __init__(  # noqa: PLR0913
         self,
         mask_ratio,
@@ -81,6 +82,7 @@ class SegmentEncoder(Encoder):
         )
         # Load model from checkpoint if provided
         self.load_from_ckpt(ckpt_path)
+        breakpoint()
 
     def load_from_ckpt(self, ckpt_path):
         """
@@ -164,21 +166,26 @@ class SegmentEncoder(Encoder):
         for i in range(len(features)):
             features[i] = ops[i](features[i])
 
+        breakpoint()
         return features
 
 
 class FusionBlock(nn.Module):
+    print("\n Entered FusionBlock...! in factory.py")
     def __init__(self, input_dim, output_dim):
         super().__init__()
         self.conv = nn.Conv2d(input_dim, output_dim, kernel_size=3, padding=1)
         self.bn = nn.BatchNorm2d(output_dim)
+        breakpoint()
 
     def forward(self, x):
         x = F.relu(self.bn(self.conv(x)))
         return x
+        breakpoint()
 
 
 class SegmentationHead(nn.Module):
+    print("\n Entered SegmentationHead...! in factory.py")
     def __init__(self, input_dim, num_classes):
         super().__init__()
         self.conv1 = nn.Conv2d(input_dim, input_dim // 2, kernel_size=3, padding=1)
@@ -186,10 +193,12 @@ class SegmentationHead(nn.Module):
             input_dim // 2, num_classes, kernel_size=1
         )  # final conv to num_classes
         self.bn1 = nn.BatchNorm2d(input_dim // 2)
+        breakpoint()
 
     def forward(self, x):
         x = F.relu(self.bn1(self.conv1(x)))
         x = self.conv2(x)  # No activation before final layer
+        breakpoint()
         return x
 
 
@@ -204,6 +213,7 @@ class Regressor(nn.Module):
         ckpt_path (str): Path to the checkpoint file.
     """
 
+    print("\n Entered Regressor...! in factory.py")
     def __init__(self, num_classes, feature_maps, ckpt_path):
         super().__init__()
         # Default values are for the clay mae base model.
@@ -224,6 +234,7 @@ class Regressor(nn.Module):
         self.seg_head = nn.Conv2d(
             self.encoder.dim // 4, num_classes, kernel_size=3, padding=1
         )
+        breakpoint()
 
     def forward(self, datacube):
         """
@@ -245,4 +256,5 @@ class Regressor(nn.Module):
         fused = self.fusion(fused)
 
         logits = self.seg_head(fused)
+        breakpoint()
         return logits

@@ -39,7 +39,7 @@ class BioMastersDataset(Dataset):
         chip_dir (str): Directory containing the image chips.
         label_dir (str): Directory containing the labels.
     """
-
+    print("\n Entered BioMastersDataset...! in biomasters_datamodule.py")
     def __init__(self, chip_dir, label_dir, metadata):
         self.chip_dir = Path(chip_dir)
         self.label_dir = Path(label_dir)
@@ -102,6 +102,7 @@ class BioMastersDataset(Dataset):
             "time": torch.zeros(4),  # Placeholder for time information
             "latlon": torch.zeros(4),  # Placeholder for latlon information
         }
+        breakpoint()
         return sample
 
 
@@ -119,7 +120,7 @@ class BioMastersDataModule(L.LightningDataModule):
         num_workers (int): Number of workers for data loading.
         platform (str): Platform identifier used in metadata.
     """
-
+    print("\n Entered BioMastersDataModule...! in biomasters_datamodule.py")
     def __init__(  # noqa: PLR0913
         self,
         train_chip_dir,
@@ -138,6 +139,7 @@ class BioMastersDataModule(L.LightningDataModule):
         self.metadata = Box(yaml.safe_load(open(metadata_path)))
         self.batch_size = batch_size
         self.num_workers = num_workers
+        breakpoint()
 
     def setup(self, stage=None):
         """
@@ -146,6 +148,7 @@ class BioMastersDataModule(L.LightningDataModule):
         Args:
             stage (str): Stage identifier ('fit' or 'test').
         """
+        print("\n Entered setup...!")
         if stage in {"fit", None}:
             self.trn_ds = BioMastersDataset(
                 self.train_chip_dir,
@@ -157,6 +160,7 @@ class BioMastersDataModule(L.LightningDataModule):
                 self.val_label_dir,
                 self.metadata,
             )
+            breakpoint()
 
     def train_dataloader(self):
         """
@@ -165,6 +169,7 @@ class BioMastersDataModule(L.LightningDataModule):
         Returns:
             DataLoader: DataLoader for training dataset.
         """
+        print("\n Entered train_dataloader...!")
         return DataLoader(
             self.trn_ds,
             batch_size=self.batch_size,
@@ -179,6 +184,7 @@ class BioMastersDataModule(L.LightningDataModule):
         Returns:
             DataLoader: DataLoader for validation dataset.
         """
+        print("\n Entered val_dataloader...!")
         return DataLoader(
             self.val_ds,
             batch_size=self.batch_size,

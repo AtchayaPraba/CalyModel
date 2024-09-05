@@ -52,7 +52,7 @@ trainer:
       init_args:
         save_dir: /content/drive/MyDrive/tb_logs
         name: test_run
-        version: v0.0
+        version: v0
         log_graph: False
         default_hp_metric: True
         prefix: ""

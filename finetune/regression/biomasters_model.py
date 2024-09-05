@@ -51,7 +51,6 @@ class BioMastersClassifier(L.LightningModule):
         )
         self.loss_fn = NoNaNRMSE()
         self.score_fn = MeanSquaredError()
-        breakpoint()
 
     def forward(self, datacube):
         """
@@ -81,10 +80,8 @@ class BioMastersClassifier(L.LightningModule):
                 2.19,
             ]
         )
-        
         gsd = torch.tensor(10.0)
-        breakpoint()
-        
+
         return self.model(
             {
                 "pixels": datacube["pixels"],
@@ -114,7 +111,6 @@ class BioMastersClassifier(L.LightningModule):
             betas=(self.hparams.b1, self.hparams.b2),
         )
         scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=8, gamma=0.5)
-        breakpoint()
         return {
             "optimizer": optimizer,
             "lr_scheduler": {
@@ -135,7 +131,6 @@ class BioMastersClassifier(L.LightningModule):
         Returns:
             torch.Tensor: The computed loss for the batch.
         """
-        print("\n Entered shared_step...!")
         labels = batch["label"]
         logits = self(batch)
         logits = F.interpolate(
@@ -150,7 +145,6 @@ class BioMastersClassifier(L.LightningModule):
         score = self.score_fn(logits, labels)
         # Convert to RMSE
         score = torch.sqrt(score)
-        breakpoint()
 
         self.log(
             f"{phase}/loss",
@@ -183,7 +177,6 @@ class BioMastersClassifier(L.LightningModule):
         Returns:
             torch.Tensor: The computed loss for the batch.
         """
-        print("\n Entered training_step...!")
         return self.shared_step(batch, batch_idx, "train")
 
     def validation_step(self, batch, batch_idx):
@@ -197,5 +190,4 @@ class BioMastersClassifier(L.LightningModule):
         Returns:
             torch.Tensor: The computed loss for the batch.
         """
-        print("\n Entered validation_step...!")
         return self.shared_step(batch, batch_idx, "val")

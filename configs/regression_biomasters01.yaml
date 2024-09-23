@@ -35,12 +35,15 @@ trainer:
   # log_every_n_steps: 5
   log_every_n_steps: 1
   # max_epochs: 100
-  max_epochs: 10
-  default_root_dir: checkpoints/regression
+  max_epochs: 25
+  # default_root_dir: checkpoints/regression
+  default_root_dir: /content/drive/MyDrive/checkpoints/regression
   fast_dev_run: False
   num_sanity_val_steps: 0
   # limit_train_batches: 0.25
+  limit_train_batches: 0.10
   # limit_val_batches: 0.25
+  limit_val_batches: 0.10
   accumulate_grad_batches: 4
   logger:
     # - class_path: lightning.pytorch.loggers.WandbLogger
@@ -51,15 +54,16 @@ trainer:
     - class_path: lightning.pytorch.loggers.TensorBoardLogger
       init_args:
         save_dir: /content/drive/MyDrive/tb_logs
-        name: test_run
-        version: v0
+        name: test_run_ROI
+        version: v0.0
         log_graph: False
         default_hp_metric: True
         prefix: ""
   callbacks:
     - class_path: lightning.pytorch.callbacks.ModelCheckpoint
       init_args:
-        dirpath: checkpoints/regression
+        # dirpath: checkpoints/regression 
+        dirpath: /content/drive/MyDrive/checkpoints/regression
         auto_insert_metric_name: False
         filename: biomasters_epoch-{epoch:02d}_val-score-{val/score:.3f}
         monitor: val/score

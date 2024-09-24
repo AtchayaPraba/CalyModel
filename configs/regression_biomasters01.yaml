@@ -41,9 +41,7 @@ trainer:
   fast_dev_run: False
   num_sanity_val_steps: 0
   # limit_train_batches: 0.25
-  limit_train_batches: 0.10
   # limit_val_batches: 0.25
-  limit_val_batches: 0.10
   accumulate_grad_batches: 4
   logger:
     # - class_path: lightning.pytorch.loggers.WandbLogger

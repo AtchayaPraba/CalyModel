@@ -3,7 +3,7 @@ seed_everything: 42
 data:
   metadata_path: configs/metadata.yaml
   batch_size: 10
-  num_workers: 2
+  num_workers: 8
   # train_chip_dir: data/biomasters/train_cube
   # train_label_dir: data/biomasters/train_agbm
   # val_chip_dir: data/biomasters/test_cube

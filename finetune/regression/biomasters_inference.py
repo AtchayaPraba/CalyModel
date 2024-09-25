@@ -6,6 +6,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 from einops import rearrange
+import os
 
 from finetune.regression.biomasters_datamodule import BioMastersDataModule
 from finetune.regression.biomasters_model import BioMastersClassifier

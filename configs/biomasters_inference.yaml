@@ -1,0 +1,12 @@
+metadata_path: "/content/CalyModel/configs/metadata.yaml"
+model:
+  biomasters_checkpoint_path: "/content/drive/MyDrive/checkpoints/regression/biomasters_epoch-16_val-score-11.032.ckpt"
+  clay_checkpoint_path: "/content/CalyModel/Clay/clay-v1-base.ckpt"
+data:
+  train_chip_dir: "/content/drive/MyDrive/biomasters/train_cubes"
+  train_label_dir: "/content/drive/MyDrive/biomasters/train_labels"
+  val_chip_dir: "/content/drive/MyDrive/biomasters/test_cubes"
+  val_label_dir: "/content/drive/MyDrive/biomasters/test_labels"
+batch_size: 16
+num_workers: 4
+output_folder: "/content/drive/MyDrive/biomasters_output"

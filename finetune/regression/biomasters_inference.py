@@ -81,7 +81,7 @@ class Prediction:
         outputs = F.interpolate(
             outputs, size=(256, 256), mode="bilinear", align_corners=False
         )
-        print("Prediction completed")
+        print("Prediction completed !")
         return outputs
 
     def denormalize_images(self, normalized_images, means, stds):
@@ -143,6 +143,7 @@ class Prediction:
         """
         self.load_model()
         batch = self.prepare_data()
+        batch = {k: v.to("cuda") for k, v in batch.items()}
         predictions = self.run_prediction(batch)
         images, labels, outputs = self.post_process(batch, predictions, self.metadata)
         output_folder = self.config.get('output_folder', './output')  # Default to './output' if not specified

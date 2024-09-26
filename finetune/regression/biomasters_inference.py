@@ -116,7 +116,7 @@ class Prediction:
 
         return images, labels, outputs
     
-    def save_results(self, images, labels, outputs, output_folder):
+    def save_results(self, i, images, labels, outputs, output_folder):
         """
         Saves images, labels, and outputs as .npz files in the desired output folder.
         """
@@ -150,7 +150,7 @@ class Prediction:
             print(f"Prediction completed for batch {i} !")
             images, labels, outputs = self.post_process(batch, predictions, self.metadata)
             output_folder = self.config.get('output_folder', './output')  # Default to './output' if not specified
-            self.save_results(images, labels, outputs, output_folder)
+            self.save_results(i, images, labels, outputs, output_folder)
         print(f"Prediction completed for all batch !")
 
 # Example usage:

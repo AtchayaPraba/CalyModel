@@ -63,11 +63,12 @@ class Prediction:
             num_workers=num_workers,
         )
         dm.setup(stage="fit")
-        val_dl = iter(dm.val_dataloader())
-        batch = next(val_dl)
+        # val_dl = iter(dm.val_dataloader())
+        val_dl = dm.val_dataloader()
+        # batch = next(val_dl)
         self.metadata = dm.metadata
         print("Data prepared successfully !")
-        return batch
+        return val_dl
 
     def run_prediction(self, batch):
         """
@@ -123,18 +124,18 @@ class Prediction:
             os.makedirs(output_folder)
         
         # Define the file paths
-        images_path = os.path.join(output_folder, 'images.npz')
-        labels_path = os.path.join(output_folder, 'labels.npz')
-        outputs_path = os.path.join(output_folder, 'outputs.npz')
+        images_path = os.path.join(output_folder, f'images_{i}.npz')
+        labels_path = os.path.join(output_folder, f'labels_{i}.npz')
+        outputs_path = os.path.join(output_folder, f'outputs_{i}.npz')
         
         # Save the numpy arrays as .npz files
         np.savez(images_path, images=images)
         np.savez(labels_path, labels=labels)
         np.savez(outputs_path, outputs=outputs)
         
-        print(f"Saved images to {images_path}")
-        print(f"Saved labels to {labels_path}")
-        print(f"Saved outputs to {outputs_path}")
+        print(f"Saved images to {images_path} !")
+        print(f"Saved labels to {labels_path} !")
+        print(f"Saved outputs to {outputs_path} !")
 
 
     def run(self):
@@ -142,13 +143,15 @@ class Prediction:
         Runs the entire prediction pipeline: loading model, preparing data, running prediction, post-processing, and saving results.
         """
         self.load_model()
-        batch = self.prepare_data()
+        val_dl = self.prepare_data()
         # batch = {k: v.to("cuda") for k, v in batch.items()}
-        predictions = self.run_prediction(batch)
-        images, labels, outputs = self.post_process(batch, predictions, self.metadata)
-        output_folder = self.config.get('output_folder', './output')  # Default to './output' if not specified
-        self.save_results(images, labels, outputs, output_folder)
-        return images, labels, outputs
+        for i, batch in enumerate(val_dl):
+            predictions = self.run_prediction(batch)
+            print(f"Prediction completed for batch {i} !")
+            images, labels, outputs = self.post_process(batch, predictions, self.metadata)
+            output_folder = self.config.get('output_folder', './output')  # Default to './output' if not specified
+            self.save_results(images, labels, outputs, output_folder)
+        print(f"Prediction completed for all batch !")
 
 # Example usage:
 if __name__ == "__main__":

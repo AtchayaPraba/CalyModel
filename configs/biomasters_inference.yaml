@@ -7,6 +7,6 @@ data:
   train_label_dir: "/content/drive/MyDrive/biomasters/train_labels"
   val_chip_dir: "/content/drive/MyDrive/biomasters/test_cubes"
   val_label_dir: "/content/drive/MyDrive/biomasters/test_labels"
-batch_size: 32
+batch_size: 16
 num_workers: 1
 output_folder: "/content/drive/MyDrive/biomasters_output"

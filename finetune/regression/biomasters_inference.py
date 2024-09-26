@@ -158,5 +158,5 @@ if __name__ == "__main__":
     # Pass the path of the config file
     config_file = 'configs/biomasters_inference.yaml'
     predictor = Prediction(config_file)
-    images, labels, outputs = predictor.run()
+    predictor.run()
     # You can now work with 'result', which contains the denormalized predictions.

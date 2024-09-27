@@ -10,8 +10,8 @@ data:
   # val_label_dir: data/biomasters/test_agbm
   train_chip_dir: /content/drive/MyDrive/biomasters/train_cubes
   train_label_dir: /content/drive/MyDrive/biomasters/train_labels
-  val_chip_dir: /content/drive/MyDrive/biomasters/test_cubes
-  val_label_dir: /content/drive/MyDrive/biomasters/test_labels
+  val_chip_dir: /content/drive/MyDrive/biomasters/val_cubes
+  val_label_dir: /content/drive/MyDrive/biomasters/val_labels
 model:
   # ckpt_path: checkpoints/clay-v1-base.ckpt
   ckpt_path: /content/CalyModel/Clay/clay-v1-base.ckpt
@@ -52,7 +52,7 @@ trainer:
     - class_path: lightning.pytorch.loggers.TensorBoardLogger
       init_args:
         save_dir: /content/drive/MyDrive/tb_logs
-        name: test_run_ROI
+        name: run_ROI
         version: v0.0
         log_graph: False
         default_hp_metric: True
@@ -61,7 +61,7 @@ trainer:
     - class_path: lightning.pytorch.callbacks.ModelCheckpoint
       init_args:
         # dirpath: checkpoints/regression 
-        dirpath: /content/drive/MyDrive/checkpoints/regression
+        dirpath: /content/drive/MyDrive/checkpoints/regression/run_ROI/v0.0
         auto_insert_metric_name: False
         filename: biomasters_epoch-{epoch:02d}_val-score-{val/score:.3f}
         monitor: val/score

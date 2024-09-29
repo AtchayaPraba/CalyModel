@@ -35,7 +35,7 @@ trainer:
   # log_every_n_steps: 5
   log_every_n_steps: 2
   # max_epochs: 100
-  max_epochs: 25
+  max_epochs: 100
   # default_root_dir: checkpoints/regression
   default_root_dir: /content/drive/MyDrive/checkpoints/regression
   fast_dev_run: False

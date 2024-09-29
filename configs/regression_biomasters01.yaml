@@ -2,8 +2,8 @@
 seed_everything: 42
 data:
   metadata_path: configs/metadata.yaml
-  batch_size: 8
-  num_workers: 8
+  batch_size: 2
+  num_workers: 2
   # train_chip_dir: data/biomasters/train_cube
   # train_label_dir: data/biomasters/train_agbm
   # val_chip_dir: data/biomasters/test_cube
@@ -34,7 +34,7 @@ trainer:
   precision: 16-mixed
   # log_every_n_steps: 5
   log_every_n_steps: 2
-  # max_epochs: 50
+  # max_epochs: 100
   max_epochs: 25
   # default_root_dir: checkpoints/regression
   default_root_dir: /content/drive/MyDrive/checkpoints/regression
